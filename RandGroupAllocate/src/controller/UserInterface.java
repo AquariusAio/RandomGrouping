@@ -117,6 +117,7 @@ public class UserInterface {
         }
     }
 
+
     //显示区域初始化
     protected JScrollPane showIni(){
         model = new DefaultTableModel();

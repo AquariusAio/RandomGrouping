@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RandGroupAllocate.iml" filepath="$PROJECT_DIR$/RandGroupAllocate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RandGroupAllocate.iml" filepath="$PROJECT_DIR$/.idea/RandGroupAllocate.iml" />
     </modules>
   </component>
 </project>
