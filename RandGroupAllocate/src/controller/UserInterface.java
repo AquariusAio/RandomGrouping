@@ -1,8 +1,13 @@
 package controller;
+import com.sun.deploy.util.StringUtils;
+
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.List;
 
@@ -11,8 +16,9 @@ public class UserInterface {
     DefaultTableModel model;
     private int peoNum;
     private int groNum;
+    private int groLimit;
     List groAllocate;
-
+    String path= "E:\\new.txt";
     //顶层窗口的创建和初始化
 
     protected void frameIni(){
@@ -86,7 +92,11 @@ public class UserInterface {
             System.out.println(1);
             peoNum=Integer.parseInt(peo.getText());
             groNum=Integer.parseInt(gro.getText());
-            groupAllocate();
+            try {
+                groupAllocate();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             showAllocate();
         }));
         jPanelGroNum.add(button);
@@ -100,23 +110,23 @@ public class UserInterface {
     }
 
     //随机分组
-    protected void groupAllocate(){
+    protected void groupAllocate() throws IOException {
         Random random=new Random();
         groAllocate=new ArrayList();
-        int groLimit=(peoNum/groNum);
+        groLimit=(peoNum/groNum);
         if(peoNum%groNum!=0){
             groLimit+=1;
         }
         for (int i=0;i<peoNum;i++)
         {
             int n= random.nextInt(groNum);
-            while(Collections.frequency(groAllocate,n)>groLimit-1){
+            while(Collections.frequency(groAllocate,n)>groLimit){
                 n= random.nextInt(groNum);
             }
             groAllocate.add(n);
         }
+        printWriterMethod(path,groAllocate.toString().replace(","," ").replace('[',' ').replace(']',' '));
     }
-
 
     //显示区域初始化
     protected JScrollPane showIni(){
@@ -126,15 +136,23 @@ public class UserInterface {
         return jsp;
     }
 
+    //输出到文件
+    public static void printWriterMethod(String filepath, String content) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(filepath,true)) {
+            fileWriter.append(content);
+            fileWriter.append("\n");
+        }
+    }
+
     //显示分组信息
     protected void showAllocate(){
 
         Vector data = new Vector();//所有数据
         Vector label = new Vector();//列标
         label.add("组号");
+        for(int i=0;i<groLimit;i++)label.add("组员");
         for (int i=0;i<groNum;i++)
         {
-            label.add("组员");
             Vector row = new Vector();
             row.add(i+1);
             for (int j=0;j<groAllocate.size();j++)
