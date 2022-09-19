@@ -123,7 +123,7 @@ public class UserInterface {
             while(Collections.frequency(groAllocate,n)>groLimit){
                 n= random.nextInt(groNum);
             }
-            groAllocate.add(n);
+            groAllocate.add(n+1);
         }
         printWriterMethod(path,groAllocate.toString().replace(","," ").replace('[',' ').replace(']',' '));
     }
@@ -140,7 +140,7 @@ public class UserInterface {
     public static void printWriterMethod(String filepath, String content) throws IOException {
         try (FileWriter fileWriter = new FileWriter(filepath,true)) {
             fileWriter.append(content);
-            fileWriter.append("\n");
+            //fileWriter.append("\n");
         }
     }
 
@@ -165,9 +165,23 @@ public class UserInterface {
         }
         model.setDataVector(data, label);
     }
+
+    //数据生成
+    public void makeTestFile(){
+        peoNum=18;
+        groNum=3;
+        groLimit=6;
+        for(int i=0;i<10000;i++){
+            try {
+                groupAllocate();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static void main(String[] args) {
         UserInterface userInterface=new UserInterface();
-        userInterface.frameIni();
+        userInterface.windowIni();
     }
 }
 
