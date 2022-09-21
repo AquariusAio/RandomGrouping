@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.*;
 import java.util.List;
 
+import static sun.misc.Version.print;
+
 public class UserInterface {
     private JFrame jf;
     DefaultTableModel model;
@@ -120,7 +122,7 @@ public class UserInterface {
         for (int i=0;i<peoNum;i++)
         {
             int n= random.nextInt(groNum);
-            while(Collections.frequency(groAllocate,n)>groLimit){
+            while(Collections.frequency(groAllocate,n+1)>=groLimit){
                 n= random.nextInt(groNum);
             }
             groAllocate.add(n+1);
@@ -157,7 +159,7 @@ public class UserInterface {
             row.add(i+1);
             for (int j=0;j<groAllocate.size();j++)
             {
-                if (groAllocate.get(j).equals(i)){
+                if (groAllocate.get(j).equals(i+1)){
                     row.add(j);
                 }
             }
@@ -181,9 +183,8 @@ public class UserInterface {
     }
     public static void main(String[] args) {
         UserInterface userInterface=new UserInterface();
-        userInterface.windowIni();
+        userInterface.frameIni();
     }
 }
-
 
 
